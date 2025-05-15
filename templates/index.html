@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VibeBoard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url('/static/brick-wall.jpg'); /* Replace with your own texture */
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-6">
+
+  <!-- Main App UI Wrapper -->
+  <div id="mainUI" class="max-w-5xl mx-auto bg-white/30 backdrop-blur-md p-6 rounded-xl shadow-lg">
+
+    <!-- Title and prompt -->
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">VibeBoard</h1>
+    <p class="text-gray-600 mb-6">Type a mood or theme and create your visual board</p>
+
+    <!-- Input + Generate + Save -->
+    <div class="flex flex-wrap gap-3 mb-6">
+      <input id="promptInput" type="text" placeholder="Enter a mood or theme..."
+        class="flex-grow p-3 border rounded-lg shadow-sm min-w-[250px]" />
+      <button onclick="generateMoodboard()"
+        class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+        🎯 Generate
+      </button>
+      <button onclick="saveCurrentBoard()"
+        class="flex items-center gap-2 bg-yellow-300 hover:bg-yellow-400 rounded-full px-4 py-2 shadow-md text-black"
+        title="Save this board">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke-width="2" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M17 3H7a2 2 0 00-2 2v14l7-3 7 3V5a2 2 0 00-2-2z" />
+        </svg>
+        <span class="text-sm font-medium">Save Board</span>
+      </button>
+    </div>
+
+        <!-- Saved Boards -->
+    <div class="relative pb-5 inline-block" id="savedBoardsContainer">
+        <h2 id="savedBoardsToggle"
+            class="text-xl font-bold text-gray-800 cursor-pointer">📂 Saved Boards</h2>
+
+        <div id="savedBoardsWrapper"
+            class="absolute mt-2 hidden z-50">
+            <ul id="savedBoards"
+                class="bg-white border rounded shadow-lg p-3 space-y-2 w-64">
+            <!-- JS fills this -->
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Moodboard Output -->
+    <div id="moodboard" class="columns-2 md:columns-3 gap-4 space-y-4 mb-8"></div>
+
+  </div>
+
+  <!-- Fullscreen Image Modal -->
+  <div id="imageModal" onclick="handleOverlayClick(event)"
+    class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center hidden z-50">
+    <div class="relative">
+      <img id="modalImage" src="" class="max-h-[90vh] rounded-lg object-contain" />
+
+      <!-- Close Button -->
+      <button onclick="closeModal()"
+        class="absolute top-3 right-3 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-md z-10"
+        title="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke-width="2" stroke="currentColor" class="w-5 h-5 text-black">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Download Button -->
+      <button id="downloadLink"
+        class="absolute bottom-3 right-3 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-md z-10"
+        title="Download Image">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke-width="2" stroke="currentColor" class="w-6 h-6 text-black">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4.5 12.75l7.5 7.5 7.5-7.5M12 3v16.5" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
